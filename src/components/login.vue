@@ -64,10 +64,7 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate(async valid => {
         if (valid) {
-          const result = await this.$ajax.post('http://localhost:4001/logintest', this.ruleForm)
-          // .then((response) => {console.log(response)})
-          console.log('账户检测返回的值:' + result.data.data.principal)
-          console.log('账户检测codez值:' + result.data.code)
+          const result = await this.$ajax.post('login', this.ruleForm)
           if (result.data.code === 200) {
             window.sessionStorage.setItem('token', result.data.data.principal)
             this.$router.push('/home')
@@ -83,10 +80,8 @@ export default {
               message: result.data.message,
               offset: 100
             })
-            console.log('error')
           }
         } else {
-          console.log('error submit!!')
           this.$refs[formName].resetFields()
           return false
         }
